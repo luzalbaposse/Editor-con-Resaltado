@@ -4,15 +4,12 @@
 #include <set>
 #include <map>
 #include <vector>
-
-// Incluya aquí los headers que necesite
-
 using std::string;
 using std::set;
 using std::map;
 using std::vector;
-
 typedef unsigned id_comm;
+using namespace std;
 	
 class EditorResaltado {
 	public:
@@ -50,33 +47,28 @@ class EditorResaltado {
 		// Devuelve la cantidad de comentarios que hay en el texto
 
 	private:
-		// TODO: Definir la estructura y describir claramente el invariante de representación de la misma.
+		//* TODO: Definir la estructura y describir claramente el invariante de representación de la misma.
+		//? CONSULTAR
 		/*
-		P cantidad de palabras totales del texto
-		C cantidad de comentarios totales
-		M cantidad de comentarios de la palabra más comentada
-		Ri cantidad de palabras del rango del comentario i	
+		Invariante de representación:
+		Rep(e: estr) ≡
+		(∀i ∈ [0, e.longitud()), e.comentarios_por_palabra[i] ≠ ∅) ∧
+		(∀id ∈ claves(e.comentarios_texto), ∃c ∈ e.comentarios → c.id == id) ∧
+		(e.longitud() == |e.comentarios_por_palabra|) ∧
+		(∀id1, id2 ∈ claves(e.comentarios_texto), id1 ≠ id2) ∧ e.longitud() >= 0 ∧ e.cant_comentarios >= 0 
+
+		1. ∀i ∈ [0, e.longitud()), e.comentarios_por_palabra[i] ≠ ∅:
+		Para cada posición i en el vector de palabras, existe un conjunto de IDs de comentarios.
+
+		2. ∀id ∈ claves(e.comentarios_texto), ∃c ∈ e.comentarios → c.id == id:
+		Para cada ID de comentario en comentarios_texto, existe un comentario correspondiente en comentarios con el mismo ID.
+
+		3. e.longitud() == |e.comentarios_por_palabra|:
+		La cantidad de elementos en el vector de palabras es igual a la cantidad de elementos en el vector de conjuntos de IDs de comentarios.
+
+		4. ∀id1, id2 ∈ claves(e.comentarios_texto), id1 ≠ id2:
+		Los IDs de los comentarios en comentarios_texto son únicos.
 		*/
-/*
-Invariante de representación:
-Rep(e: estr) ≡
-  (∀i ∈ [0, e.longitud()), e.comentarios_por_palabra[i] ≠ ∅) ∧
-  (∀id ∈ claves(e.comentarios_texto), ∃c ∈ e.comentarios → c.id == id) ∧
-  (e.longitud() == |e.comentarios_por_palabra|) ∧
-  (∀id1, id2 ∈ claves(e.comentarios_texto), id1 ≠ id2) ∧ e.longitud() >= 0 ∧ e.cant_comentarios >= 0 
-
-1. ∀i ∈ [0, e.longitud()), e.comentarios_por_palabra[i] ≠ ∅:
-   Para cada posición i en el vector de palabras, existe un conjunto de IDs de comentarios.
-
-2. ∀id ∈ claves(e.comentarios_texto), ∃c ∈ e.comentarios → c.id == id:
-   Para cada ID de comentario en comentarios_texto, existe un comentario correspondiente en comentarios con el mismo ID.
-
-3. e.longitud() == |e.comentarios_por_palabra|:
-   La cantidad de elementos en el vector de palabras es igual a la cantidad de elementos en el vector de conjuntos de IDs de comentarios.
-
-4. ∀id1, id2 ∈ claves(e.comentarios_texto), id1 ≠ id2:
-   Los IDs de los comentarios en comentarios_texto son únicos.
-*/
 
 		//* Estructura de comentarios
 		struct Comentario {

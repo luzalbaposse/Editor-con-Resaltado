@@ -7,16 +7,49 @@
 
 using namespace std;
 
-	// TODO: implementar y justificar complejidad
-EditorResaltado::EditorResaltado() {}
+//* TODO: implementar y justificar complejidad
+EditorResaltado::EditorResaltado(){ comentarios = vector<Comentario>(); palabras = vector<string>(); comentarios_por_palabra = vector<set<id_comm>>(); comentarios_texto = map<id_comm, string>(); }
 
 unsigned EditorResaltado::longitud() const {
-	// TODO: implementar y justificar complejidad
-	return 0;
+	//* TODO: implementar y justificar complejidad
+	return palabras.size();
 }
 
 void EditorResaltado::cargar_texto(const string& txt, const string& comments) {
-	// TODO: implementar y justificar complejidad
+//* TODO: implementar y justificar complejidad
+    palabras.clear();
+    comentarios.clear();
+    comentarios_texto.clear();
+    comentarios_por_palabra.clear();
+
+    ifstream archivo_texto(txt);
+    ifstream archivo_comentarios(comments);
+
+    string palabra;
+    while (archivo_texto >> palabra) { 
+        palabras.push_back(palabra);
+        comentarios_por_palabra.emplace_back(); 
+    }
+
+    string linea_comentario;
+    id_comm id = 1; 
+    while (getline(archivo_comentarios, linea_comentario)) {
+     
+        istringstream ss(linea_comentario);
+        unsigned desde, hasta;
+        ss >> desde >> hasta;
+        string comentario((istreambuf_iterator<char>(ss)), istreambuf_iterator<char>());
+
+      
+        Comentario c = Comentario(comentario, make_pair(desde, hasta), id);
+        comentarios.push_back(c);
+        comentarios_texto[id] = comentario;
+
+        for (unsigned i = desde; i < hasta; ++i) {
+            comentarios_por_palabra[i].insert(id);
+        }
+        id++;
+    }
 }
 
 
