@@ -51,7 +51,33 @@ class EditorResaltado {
 
 	private:
 		// TODO: Definir la estructura y describir claramente el invariante de representación de la misma.
-		
+		/*
+		P cantidad de palabras totales del texto
+		C cantidad de comentarios totales
+		M cantidad de comentarios de la palabra más comentada
+		Ri cantidad de palabras del rango del comentario i	
+		*/
+/*
+Invariante de representación:
+Rep(e: estr) ≡
+  (∀i ∈ [0, e.longitud()), e.comentarios_por_palabra[i] ≠ ∅) ∧
+  (∀id ∈ claves(e.comentarios_texto), ∃c ∈ e.comentarios → c.id == id) ∧
+  (e.longitud() == |e.comentarios_por_palabra|) ∧
+  (∀id1, id2 ∈ claves(e.comentarios_texto), id1 ≠ id2) ∧ e.longitud() >= 0 ∧ e.cant_comentarios >= 0 
+
+1. ∀i ∈ [0, e.longitud()), e.comentarios_por_palabra[i] ≠ ∅:
+   Para cada posición i en el vector de palabras, existe un conjunto de IDs de comentarios.
+
+2. ∀id ∈ claves(e.comentarios_texto), ∃c ∈ e.comentarios → c.id == id:
+   Para cada ID de comentario en comentarios_texto, existe un comentario correspondiente en comentarios con el mismo ID.
+
+3. e.longitud() == |e.comentarios_por_palabra|:
+   La cantidad de elementos en el vector de palabras es igual a la cantidad de elementos en el vector de conjuntos de IDs de comentarios.
+
+4. ∀id1, id2 ∈ claves(e.comentarios_texto), id1 ≠ id2:
+   Los IDs de los comentarios en comentarios_texto son únicos.
+*/
+
 		//* Estructura de comentarios
 		struct Comentario {
 			string texto;
@@ -63,9 +89,7 @@ class EditorResaltado {
 				: texto(texto), rango(rango), id(id), resuelto(false) {}
 		};
 		vector<Comentario> comentarios;
-		
-		int cant_comentarios;
-		
+				
 		//* Estructura de palabras
 		vector<string> palabras;
 		// Mapea la posición de cada palabra a los IDs de los comentarios
@@ -73,6 +97,5 @@ class EditorResaltado {
 		// Mapea los IDs de comentarios a su texto
 		map<id_comm, string> comentarios_texto;
 		
-
 
 		};
