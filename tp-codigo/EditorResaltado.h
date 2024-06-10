@@ -52,10 +52,27 @@ class EditorResaltado {
 	private:
 		// TODO: Definir la estructura y describir claramente el invariante de representación de la misma.
 		
-		int cant_palabras;
-		vector<string> palabras;
+		//* Estructura de comentarios
+		struct Comentario {
+			string texto;
+			pair<unsigned, unsigned> rango;  // Tupla de rango del comentario
+			id_comm id;                      // ID del comentario
+			bool resuelto;                   // Indica si el comentario fue resuelto
+
+			Comentario(string texto, pair<unsigned, unsigned> rango, id_comm id)
+				: texto(texto), rango(rango), id(id), resuelto(false) {}
+		};
+		vector<Comentario> comentarios;
 		
+		int cant_comentarios;
+		
+		//* Estructura de palabras
+		vector<string> palabras;
+		// Mapea la posición de cada palabra a los IDs de los comentarios
+		vector<set<id_comm>> comentarios_por_palabra;
+		// Mapea los IDs de comentarios a su texto
+		map<id_comm, string> comentarios_texto;
 		
 
-	
+
 		};
