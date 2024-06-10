@@ -3,6 +3,7 @@
         "set": "cpp",
         "vector": "cpp",
         "istream": "cpp",
-        "__config": "cpp"
+        "__config": "cpp",
+        "chrono": "cpp"
     }
 }

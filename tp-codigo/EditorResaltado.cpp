@@ -54,23 +54,40 @@ void EditorResaltado::cargar_texto(const string& txt, const string& comments) {
 
 
 const string& EditorResaltado::palabra_en(unsigned pos) const {
-	// TODO: implementar y justificar complejidad
-	return "";
+	//* TODO: implementar y justificar complejidad
+	return palabras[pos];
 }
 
 const string& EditorResaltado::texto_comentario(id_comm id) const {
-	// TODO: implementar y justificar complejidad
-	return "";
+	//* TODO: implementar y justificar complejidad  
+	//? Podemos poner los chequeos correspondientes, porque esto no está bien así.
+    auto it = comentarios_texto.find(id); 
+    return it->second;
 }
 
+
 const set<id_comm> & EditorResaltado::comentarios_palabra(unsigned pos) const {
-	// TODO: implementar y justificar complejidad
-	return set<id_comm>();
+	//* TODO: implementar y justificar complejidad
+	return comentarios_por_palabra[pos];
 }
 
 void EditorResaltado::insertar_palabra(const string& palabra, unsigned pos) {
-	// TODO: implementar y justificar complejidad
+	//* TODO: implementar y justificar complejidad
+	//! Consultar con Gervasio
+	if (pos == longitud()){
+		palabras.push_back(palabra);
+		comentarios_por_palabra.emplace_back();
+	} else {
+	
+	palabras.insert(palabras.begin() + pos, palabra);
+    
+    comentarios_por_palabra.insert(comentarios_por_palabra.begin() + pos, set<id_comm>());
+    
+    for (unsigned i = pos + 1; i < comentarios_por_palabra.size(); ++i) {
+        comentarios_por_palabra[i].insert(comentarios_por_palabra[i - 1].begin(), comentarios_por_palabra[i - 1].end());
+    }
 }
+} 
 
 void EditorResaltado::borrar_palabra(unsigned pos) {
 	// TODO: implementar y justificar complejidad
