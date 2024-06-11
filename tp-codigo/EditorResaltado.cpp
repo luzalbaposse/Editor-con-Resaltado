@@ -90,24 +90,87 @@ void EditorResaltado::insertar_palabra(const string& palabra, unsigned pos) {
 } 
 
 void EditorResaltado::borrar_palabra(unsigned pos) {
-	// TODO: implementar y justificar complejidad
+	//* TODO: implementar y justificar complejidad
+	//! Consultar con Gervasio
+	palabras.erase(palabras.begin() + pos);
+
+	set<id_comm> comentarios_eliminados = comentarios_por_palabra[pos];
+
+	comentarios_por_palabra.erase(comentarios_por_palabra.begin() + pos);
+	
+    for (unsigned i = pos; i < comentarios_por_palabra.size(); ++i) {
+        for (const auto& id : comentarios_eliminados) {
+            comentarios_por_palabra[i].erase(id);
+        }
+    }
+    
+    for (const auto& id : comentarios_eliminados) {
+        bool resuelto = false;
+        for (const auto& set_ids : comentarios_por_palabra) {
+            if (set_ids.find(id) != set_ids.end()) {
+                resuelto = true;
+                break;
+            }
+        }
+        if (!resuelto) {
+            comentarios_texto.erase(id);
+        }
+    }
+	
+
 }
+
 
 id_comm EditorResaltado::comentar(const string& texto, unsigned pos_desde, unsigned pos_hasta) {
 	// TODO: implementar y justificar complejidad
-	return 0;
+	//! Consultar con Gervasio
+
+	Comentario c = Comentario(texto, make_pair(pos_desde, pos_hasta), comentarios.size()-1);
+
+	comentarios.push_back(c);
+	comentarios_texto[comentarios.size()-1] = texto;
+
+	for (unsigned i = pos_desde; i < pos_hasta; ++i) {
+		comentarios_por_palabra[i].insert(comentarios.size()-1);
+	}
+
+	return comentarios.size()-1;
 }
 
 void EditorResaltado::resolver_comentario(id_comm id) {
-	// TODO: implementar y justificar complejidad
+	//* TODO: implementar y justificar complejidad
+	//! Consultar con Gervasio
+	for (int i = 0, n = comentarios.size(); i < n; ++i){
+		if(comentarios[i].id == id){
+			for (int j = comentarios[i].rango.first; j < comentarios[i].rango.second; ++j){
+				comentarios_por_palabra[j].erase(id);
+			}
+		comentarios_texto.erase(id);
+		}
+	}
 }
 
 unsigned EditorResaltado::cantidad_comentarios() const {
-	// TODO: implementar y justificar complejidad
-	return 0;
+	//* TODO: implementar y justificar complejidad
+	return comentarios.size();
 }
 
 EditorResaltado EditorResaltado::con_texto(const string& texto) {
 	// TODO: implementar y justificar complejidad
-	return EditorResaltado();
+    EditorResaltado editor;
+
+	// funcion para dividir el texto en palabras y cargarlas en el vector de 
+	int i = 0;
+	while (i < texto.size()){
+		string palabra = "";
+		while(i < texto.size() && texto[i] != ' '){
+			palabra += texto[i];
+			i++;
+		}
+		editor.palabras.push_back(palabra);
+		editor.comentarios_por_palabra.emplace_back();
+		i++;
+	}
+	
+    return editor;
 }
