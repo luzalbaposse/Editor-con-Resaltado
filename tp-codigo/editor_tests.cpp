@@ -57,7 +57,6 @@ TEST(editor_tests, test_borrar_una_palabra_modifica_el_texto_y_la_longitud) {
   ASSERT_EQ(e.cantidad_comentarios(), 0);
 }
 
-//! FALLO ESTE TEST
 TEST(editor_tests, test_borrar_palabra_elimina_comentarios_vacios) {
   EditorResaltado e = EditorResaltado::con_texto("Hola mundo");
   e.comentar("este se va", 0, 1);
@@ -80,7 +79,6 @@ TEST(editor_tests, test_comentar_agrega_un_comentario_en_el_rango) {
   chequear_comentario(e, 2, "comentario sobre 'sol' y 'árbol'");
 }
 
-//! FALLO ESTE TEST
 TEST(editor_tests, test_agregar_texto_en_medio_de_un_comentario_agranda_el_comentario) {
   EditorResaltado e = EditorResaltado::con_texto("gato sol árbol libro");
 
@@ -93,7 +91,6 @@ TEST(editor_tests, test_agregar_texto_en_medio_de_un_comentario_agranda_el_comen
   chequear_comentario(e, 3, "este comentario se va a agrandar");
 }
 
-//! FALLO ESTE TEST
 TEST(editor_tests, test_resolver_comentario_elimina_el_comentario) {
   EditorResaltado e = EditorResaltado::con_texto("gato sol árbol libro");
 
@@ -106,7 +103,6 @@ TEST(editor_tests, test_resolver_comentario_elimina_el_comentario) {
   ASSERT_EQ(e.comentarios_palabra(3).size(), 0);
 }
 
-//! FALLO ESTE TEST
 TEST(editor_tests, test_resolver_comentario_deja_otros_comentarios_intactos) {
   EditorResaltado e = EditorResaltado::con_texto("gato sol árbol");
 
@@ -119,13 +115,12 @@ TEST(editor_tests, test_resolver_comentario_deja_otros_comentarios_intactos) {
   chequear_comentario(e, 1, "este se queda");
 }
 
-//! FALLO ESTE TEST
 TEST(editor_tests, test_cargar_texto) {
   EditorResaltado e;
 
   // NOTE: la ruta a ambos archivos incluye ".." porque se asume que el test se
   // va a correr dentro del directorio "build" generador por CMake.
-  e.cargar_texto("../texto.txt","../comentarios.txt");
+  e.cargar_texto("texto.txt","comentarios.txt");
 
   ASSERT_EQ(e.longitud(), 69);
 
@@ -135,3 +130,6 @@ TEST(editor_tests, test_cargar_texto) {
   chequear_comentario(e, 1, "\"Lorem ipsum\" proviene de las palabras \"dolorem ipsum\" truncadas.");
   chequear_comentario(e, 60, "Los fragmentos de texto provienen del texto \"De finibus bonurum et malorum\".");
 }
+
+
+

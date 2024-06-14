@@ -80,9 +80,9 @@ class EditorResaltado {
 			Comentario(string texto, pair<unsigned, unsigned> rango, id_comm id)
 				: texto(texto), rango(rango), id(id), resuelto(false) {}
 		};
+		
 		vector<Comentario> comentarios;
 				
-		//* Estructura de palabras
 		vector<string> palabras;
 		// Mapea la posición de cada palabra a los IDs de los comentarios
 		vector<set<id_comm>> comentarios_por_palabra;
